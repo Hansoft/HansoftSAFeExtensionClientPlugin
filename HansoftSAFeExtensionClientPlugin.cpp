@@ -136,11 +136,6 @@ public:
 			m_pDynamicHelper = shared_ptr<CDynamicHelper>(new CDynamicHelper());
 			m_pDynamicHelper->m_RightClickSubscription = m_pSession->GlobalRegisterForRightClickNotifications(NULL);
 			m_pDynamicHelper->m_DynamicUpdateSubscription = m_pSession->GlobalRegisterForDynamicCustomSettingsNotifications(hpm_str("com.hansoft.safeextension.clientplugin."), m_UserContext);
-			/*
-			m_pDynamicHelper = new CDynamicHelper;
-			m_pDynamicHelper->m_RightClickSubscription = m_pSession->GlobalRegisterForRightClickNotifications(NULL);	
-			m_pDynamicHelper->m_DynamicUpdateSubscription = m_pSession->GlobalRegisterForDynamicCustomSettingsNotifications(hpm_str("com.hansoft.safeextension.clientplugin."), m_UserContext);		
-			*/
 		}
 		catch (const HPMSdk::HPMSdkException &_Exception)
 		{
@@ -156,7 +151,10 @@ public:
 	{
 		try
 		{
-			if (_Data.m_SelectedTasks.size() > 0)
+			if (_Data.m_SelectedTasks.size() == 1 &&
+				m_pSession->UtilIsIDBacklogProject(m_pSession->TaskGetContainer(m_pSession->TaskRefGetTask(_Data.m_SelectedTasks[0]))) &&
+				m_pSession->ProjectGetProperties(m_pSession->UtilGetRealProjectIDFromProjectID(_Data.m_ProjectID)).m_Name.find(hpm_str("Portfolio")) != -1
+				)
 			{
 				m_LastSelectedTasks = _Data.m_SelectedTasks;
 

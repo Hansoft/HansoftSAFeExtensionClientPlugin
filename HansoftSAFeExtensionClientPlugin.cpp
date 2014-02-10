@@ -260,7 +260,6 @@ public:
 		}
 	}
 
-
 	virtual void On_Callback(const HPMChangeCallbackData_DynamicCustomSettingsNotification &_Data)
 	{
 		if (! (_Data.m_TabIdentifiers.size() == 1 && _Data.m_TabIdentifiers[0].compare(hpm_str("com.hansoft.safeextension.clientplugin.addfeaturedialog")) == 0))
